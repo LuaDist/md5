@@ -1,36 +1,35 @@
-# Copyright (C) 2007-2009 LuaDist.
+# Copyright (C) 2007-2011 LuaDist.
 # Created by Peter Drahoš
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
 
-PROJECT(md5 C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-INCLUDE(dist.cmake)
+project ( md5 C )
+cmake_minimum_required ( VERSION 2.6 )
+include ( dist.cmake )
 
-ADD_LUA_MODULE(core src/md5.c src/md5lib.c src/md5.def)
-ADD_LUA_MODULE(des56 src/des56.c src/ldes56.c src/des56.def)
+install_lua_module ( md5.core src/md5.c src/md5lib.c src/md5.def )
+install_lua_module ( des56 src/des56.c src/ldes56.c src/des56.def )
 
-IF(BUILD_TESTING)
-	# Lua Test
-	ADD_LUA_TEST(tests/test.lua)
-	
+install_lua_module ( md5 src/md5.lua )
+install_data ( README )
+install_doc ( doc/ )
+install_test ( tests/ )
+
+if ( BUILD_TESTING )
 	# Binary Tests
-	INCLUDE_DIRECTORIES(src)
-	ADD_EXECUTABLE(fdemo tests/DES56/fdemo.c src/des56.c)
-	ADD_TEST(fdemo fdemo -demo -c 1000)
-	FIND_LIBRARY(CRYPT_LIB crypt)
-	IF (CRYPT_LIB)
-		ADD_EXECUTABLE(ftest tests/DES56/ftest.c src/des56.c)
-		TARGET_LINK_LIBRARIES(ftest ${CRYPT_LIB})
-		ADD_TEST(ftest1 ftest 4869207468657265 a820105412de3991 77129bd8c052e7)
-		ADD_TEST(ftest2 ftest 1.21280ac -c 5000000 -k 1000000 -C 100000 -K 100000)
-	ENDIF (CRYPT_LIB)
-ENDIF(BUILD_TESTING)
+	include_directories ( src )
+	add_executable ( fdemo tests/DES56/fdemo.c src/des56.c )
+	add_test ( fdemo fdemo -demo -c 1000 )
+	find_library ( CRYPT_LIB crypt )
+	if (CRYPT_LIB)
+		add_executable ( ftest tests/DES56/ftest.c src/des56.c )
+		target_link_libraries ( ftest ${CRYPT_LIB} )
+		add_test ( ftest1 ftest 4869207468657265 a820105412de3991 77129bd8c052e7 )
+		add_test ( ftest2 ftest 1.21280ac -c 5000000 -k 1000000 -C 100000 -K 100000 )
+	endif ()
+endif ()
 
-INSTALL(TARGETS core DESTINATION ${INSTALL_CMOD}/md5)
-INSTALL(TARGETS des56 DESTINATION ${INSTALL_CMOD})
-INSTALL(FILES src/md5.lua DESTINATION ${INSTALL_LMOD})
-INSTALL(FILES README DESTINATION ${INSTALL_DATA})
-INSTALL(DIRECTORY doc/ DESTINATION ${INSTALL_DOC})
-INSTALL(DIRECTORY tests/ DESTINATION ${INSTALL_TEST})
+add_lua_test ( tests/test.lua
+  src # workaround package.path
+)
