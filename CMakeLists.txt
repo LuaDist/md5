@@ -6,7 +6,8 @@
 
 project ( md5 C )
 cmake_minimum_required ( VERSION 2.6 )
-include ( dist.cmake )
+include ( cmake/dist.cmake )
+include ( cmake/lua.cmake )
 
 install_lua_module ( md5.core src/md5.c src/md5lib.c src/md5.def )
 install_lua_module ( des56 src/des56.c src/ldes56.c src/des56.def )
@@ -31,5 +32,5 @@ if ( BUILD_TESTING )
 endif ()
 
 add_lua_test ( tests/test.lua
-  src # workaround package.path
+  
 )
