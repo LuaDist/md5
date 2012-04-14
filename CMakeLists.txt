@@ -17,6 +17,7 @@ install_data ( README )
 install_doc ( doc/ )
 install_test ( tests/ )
 
+enable_testing()
 if ( BUILD_TESTING )
 	# Binary Tests
 	include_directories ( src )
@@ -31,6 +32,4 @@ if ( BUILD_TESTING )
 	endif ()
 endif ()
 
-add_lua_test ( tests/test.lua
-  
-)
+add_lua_test ( tests/test.lua )
