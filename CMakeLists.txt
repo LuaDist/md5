@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2011 LuaDist.
+# Copyright (C) 2007-2012 LuaDist.
 # Created by Peter Drahoš
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
@@ -7,7 +7,7 @@
 project ( md5 C )
 cmake_minimum_required ( VERSION 2.6 )
 include ( cmake/dist.cmake )
-include ( cmake/lua.cmake )
+include ( lua )
 
 install_lua_module ( md5.core src/md5.c src/md5lib.c src/md5.def )
 install_lua_module ( des56 src/des56.c src/ldes56.c src/des56.def )
