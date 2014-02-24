@@ -9,8 +9,8 @@ cmake_minimum_required ( VERSION 2.8 )
 include ( cmake/dist.cmake )
 include ( lua )
 
-install_lua_module ( md5.core src/md5.c src/md5lib.c src/md5.def )
-install_lua_module ( des56 src/des56.c src/ldes56.c src/des56.def )
+install_lua_module ( md5.core src/compat-5.2.c src/md5.c src/md5lib.c src/md5.def )
+install_lua_module ( des56 src/compat-5.2.c src/des56.c src/ldes56.c src/des56.def )
 
 install_lua_module ( md5 src/md5.lua )
 install_data ( README )
